@@ -15,32 +15,38 @@ Applying the steps described in the article, you will end up with:
 You will need to install Kind, Docker and Helm.
 
 Create your multi-node cluster:
+
     kind create cluster --config kind-config.yml
 
 Create a sample Docker image and preload it:
+
     cd sample-app 
     docker build -t sample-app:1.0 .
     kind load docker-image sample-app:1.0
 
 Deploy the sample app:
+
     kubectl apply -f my-deployment.yml
     cd ..
 
 You can now access this sample application at: [http://localhost:30000](http://localhost:30000)
 
 To install the applications, you need a number of Helm charts in your repository:
+
     helm repo add istio https://istio-release.storage.googleapis.com/charts
     helm repo add grafana https://grafana.github.io/helm-charts
     helm repo add cnpg https://istio-release.storage.googleapis.com/charts
     helm repo update
 
 Install Istio service mesh:
+
     kubectl create namespace istio-system
     helm install istio-base istio/base -n istio-system --set defaultRevision=default
     helm install istiod istio/istiod -n istio-system --wait
     kubectl label namespace default istio-injection=enabled --overwrite
 
 Install the Grafana, Loki, Prometheus stack:
+
     kubectl apply -f - <<EOF
     apiVersion: v1
     kind: Namespace
@@ -53,6 +59,7 @@ Install the Grafana, Loki, Prometheus stack:
     kubectl apply -f grafana-svc.yml
 
 Get the login credentials:
+
     kubectl get secret loki-grafana -n monitoring -o jsonpath={.data.admin-user} | base64 -d; echo
     kubectl get secret loki-grafana -n monitoring -o jsonpath={.data.admin-password} | base64 -d; echo
 
@@ -60,6 +67,7 @@ You can now access Grafana at [http://localhost:31300](http://localhost:31300) a
 credentials you just found.
 
 Install the Postgres database operator:
+
     kubectl apply -f - <<EOF
     apiVersion: v1
     kind: Namespace
