@@ -1,0 +1,7 @@
+grafana:
+  enabled: true
+prometheus:
+  enabled: true
+loki:
+  image:
+    tag: 2.8.11
