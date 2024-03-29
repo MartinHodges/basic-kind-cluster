@@ -35,7 +35,7 @@ To install the applications, you need a number of Helm charts in your repository
 
     helm repo add istio https://istio-release.storage.googleapis.com/charts
     helm repo add grafana https://grafana.github.io/helm-charts
-    helm repo add cnpg https://istio-release.storage.googleapis.com/charts
+    helm repo add cnpg https://cloudnative-pg.github.io/charts
     helm repo update
 
 Install Istio service mesh:
